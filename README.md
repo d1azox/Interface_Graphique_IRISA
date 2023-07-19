@@ -66,7 +66,7 @@ Documentation
 
 Vous pouvez trouver la documentation complète de l'application dans les fichiers suivants :
 
-- [Manuel d'utilisation (PDF)](Help/Manuel_d_utilisation.pdf)
+- [Manuel d'utilisation (PDF)](Help/Manuelle_utilisation.pdf)
 - [Documentation de Classe (PDF)](Help/Class_Documentation.pdf)
 
 Auteurs
