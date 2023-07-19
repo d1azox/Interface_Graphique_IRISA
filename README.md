@@ -1,10 +1,10 @@
-# Mon Interface Graphique
+## Interface Graphique
 
 ![Interface Screenshot](Image/Capture_2.png)
 
 ## Description
 
-Mon Interface Graphique est une application qui permet de réaliser des analyses d'images à l'aide d'algorithmes de détection d'objets et de segmentation. L'interface offre une expérience conviviale pour charger des images, choisir les algorithmes à utiliser, et visualiser les résultats.
+ L'application est un environnement graphique qui permet de réaliser des analyses d'images à l'aide d'algorithmes de détection d'objets et de segmentation. L'interface offre une expérience conviviale pour charger des images, choisir les algorithmes à utiliser, et visualiser les résultats.
 
 ## Fonctionnalités
  
@@ -20,7 +20,7 @@ Voici la configuration requise pour utiliser l'application :
     Python version 3.10 ou plus
     PyTorch 2.0 ou plus
     OpenCV (opencv-python-headless)
-    QT5
+    PyQt5
     UltralyticsV8
 
 Exemple d'installation avec conda :
@@ -66,7 +66,7 @@ Documentation
 
 Vous pouvez trouver la documentation complète de l'application dans les fichiers suivants :
 
- [Manuel d'utilisation (PDF)](Help/Manuel_d_utilisation.pdf)
+- [Manuel d'utilisation (PDF)](Help/Manuel_d_utilisation.pdf)
 - [Documentation de Classe (PDF)](Help/Class_Documentation.pdf)
 
 Auteurs
