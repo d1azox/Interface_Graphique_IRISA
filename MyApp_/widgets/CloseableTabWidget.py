@@ -9,7 +9,7 @@ class CloseableTabWidget(QTabWidget):
         super().__init__(parent)
         self.app_instance = app_instance
 
-        # Connect le tabCloseRequested signal pour fermer l'onglet
+        # Connection du signal pour fermer l'onglet
         self.tabCloseRequested.connect(self.close_tab)
         self.tab_counter = 1
 
@@ -17,11 +17,11 @@ class CloseableTabWidget(QTabWidget):
         # Index du widget
         widget = self.widget(index)
 
-        # Del la tab et le widget
+        # Supprime l'index du tableau et le widget
         self.removeTab(index)
         widget.deleteLater()
 
-        # Renommer les onglets suivants pour maintenir la numérotation cohérente
+        # Renomme les onglets suivants pour maintenir la numérotation cohérente
         for i in range(index, self.count()):
             new_tab_name = f"Window {i + 1}"
             self.setTabText(i, new_tab_name)

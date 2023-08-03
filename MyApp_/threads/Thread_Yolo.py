@@ -2,7 +2,7 @@ from PyQt5.QtCore import pyqtSignal , QThread
 from ultralytics import YOLO
 import cv2,subprocess, random, numpy as np
 
-class Thread_yolo_det(QThread): #Thread pour la détection de Yolo par découpage des images
+class Thread_yolo_det(QThread): #Thread pour la détection d'objet de Yolo par découpage des images (Option anvancée)
     progressChanged = pyqtSignal(int)
     finished = pyqtSignal()
     resultsReady = pyqtSignal(dict)
@@ -108,8 +108,8 @@ class Thread_yolo_det(QThread): #Thread pour la détection de Yolo par découpag
             print("Subprocess error:", e)
 
 
-class Thread_yolo_det_default(QThread): #Gére la détection de Yolo par défault c'est à dire sans découpage de l'image
-    finished = pyqtSignal() #Signal Finish du thread
+class Thread_yolo_det_default(QThread): #Thread pour la détection d'objet de Yolo sans découpage de l'image (Par défaut)
+    finished = pyqtSignal() #Signal finish du thread
     resultsReady = pyqtSignal(dict) #Signal pour transmettre les outputs du thread
 
     def __init__(self, model, input,confThreshold):
@@ -148,7 +148,7 @@ class Thread_yolo_det_default(QThread): #Gére la détection de Yolo par défaul
             print("Subprocess error:", e)
 
 
-class Thread_yolo_seg_default(QThread): #Gére la segmentation de Yolo par défault c'est à dire sans découpage de l'image
+class Thread_yolo_seg_default(QThread): #Gére la segmentation de Yolo sans découpage de l'image (Par défaut)
     finished = pyqtSignal() # Signal de fin du thread
 
 
@@ -203,7 +203,7 @@ class Thread_yolo_seg_default(QThread): #Gére la segmentation de Yolo par défa
             print("Subprocess error:", e)
 
 
-class Thread_yolo_seg(QThread): #Thread pour la détection de Yolo par découpage des images
+class Thread_yolo_seg(QThread): #Thread pour la détection de Yolo par découpage des images (Option avancée)
     progressChanged = pyqtSignal(int)
     finished = pyqtSignal()
 

@@ -371,7 +371,7 @@ if __name__ == '__main__'  :
     softmax=torch.nn.Softmax(dim=1)
     
     nb=((height-stride+2)//stride) *((width-stride+2)//stride)
-    
+    print("NB",nb, flush=True)
     
     import time
     deb=time.time()    
@@ -383,7 +383,7 @@ if __name__ == '__main__'  :
         y=_y
         for x  in range (0,width-stride+1,stride):
                      
-            print("\r",i,'/',nb,end=" ",flush=True)
+            print("I",i, flush=True)
             #print(y,y+k_size ,height,"X",x,x+k_size,width)
             if y+k_size >= height :
                 y = height -k_size

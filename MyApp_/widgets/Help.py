@@ -93,9 +93,9 @@ class HelpDialog_ins_segmentation(QDialog):
         self.table.setHorizontalHeaderLabels(["Attribute", "Description"])
 
         # Ajout des attributs et des descriptions dans le tableau
-        attributes = ["Size", "confThreshold"]
-        descriptions = ["It specifies the dimensions of the sub-regions into which the image is divided for processing. The size of these subdivisions can affect the accuracy and speed of the Yolo algorithm.",
-                        "It determines the minimum confidence score required for an object detection to be considered valid. Objects with confidence scores below this threshold are filtered out and not included in the final results."]
+        attributes = ["confThreshold","Size" ]
+        descriptions = ["It determines the minimum confidence score required for an object detection to be considered valid. Objects with confidence scores below this threshold are filtered out and not included in the final results.",
+                        "It specifies the dimensions of the sub-regions into which the image is divided for processing. The size of these subdivisions can affect the accuracy and speed of the Yolo algorithm."]
         
         self.table.setRowCount(len(attributes))
         for row, (attribute, description) in enumerate(zip(attributes, descriptions)):

@@ -4,7 +4,7 @@ from PyQt5.QtCore import Qt , QFileInfo, QModelIndex
 from PyQt5.QtGui import  QPixmap
 
 
-class CustomFileSystemModel(QFileSystemModel): #Model de l'arborecence adapté pour des path 
+class CustomFileSystemModel(QFileSystemModel): #Modèle de l'arborecence adapté pour des images 
     def flags(self, index):
         flags = super().flags(index)
         return flags | Qt.ItemIsEditable

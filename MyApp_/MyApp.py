@@ -1,7 +1,5 @@
-#QT_5
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMenuBar, QAction
 from PyQt5.QtGui import  QIcon
-
 from widgets.CloseableTabWidget import CloseableTabWidget
 import os
 import sys
@@ -24,23 +22,23 @@ class MyApp(QApplication):
         super().__init__(sys_argv)
         self.main_window = QMainWindow()
 
-        self.main_window.resize(1280, 1024)  # Taille du main window
+        self.main_window.resize(1280, 1024)  # Taille de la fênetre
         self.main_window.setWindowTitle("Interface")
 
         self._createActions()
         self._createToolBars()
         self._createMenuBar()
 
-        # Créez un CloseableTabWidget pour les onglets
+        # Instance de CloseableTabWidget pour la gestions des onglets
         self.tab_widget = CloseableTabWidget(self)
 
         # Ajoutez un premier onglet
         self.tab_widget.add_new_tab()
 
-        # Connec des Actions
+        # Connecter les actions aux outils
         self.createConnectActions()
 
-        # Ajoutez le CloseableTabWidget à la fenêtre principale
+        # Ajouter le CloseableTabWidget à la fenêtre 
         self.main_window.setCentralWidget(self.tab_widget)
         self.main_window.show()
 
@@ -185,7 +183,6 @@ class MyApp(QApplication):
         self.runAction.triggered.connect(self.handle_tab_action)
 
         # Connect Help
-
         self.helpContentAction.triggered.connect(self.handle_tab_action)
         self.aboutAction.triggered.connect(self.handle_tab_action)
 
@@ -227,8 +224,6 @@ class MyApp(QApplication):
     def openGitHubWebPage(self):
         # Ouvrir la page web de la documentation
         webbrowser.open("https://github.com/d1azox/Interface_Graphique_IRISA")
-
-
 
 # Lance l'application
 if __name__ == '__main__':

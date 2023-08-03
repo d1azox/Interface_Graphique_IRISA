@@ -42,7 +42,7 @@ class CropResultDialog(QDialog): #Fênetre du résultat du crop
 
         self.setLayout(self.layout)
 
-    def saveImage(self):
+    def saveImage(self): #Méthode pour gérer la sauvegarde de l'image découpée
         file_dialog = QFileDialog()
         file_path, _ = file_dialog.getSaveFileName(
             self, "Enregistrer l'image", "", "Images (*.png *.xpm *.jpg *.bmp)")

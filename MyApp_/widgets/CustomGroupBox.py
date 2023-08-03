@@ -25,7 +25,7 @@ class CustomGroupBox(QGroupBox):
         self.close_button = QPushButton()
         self.close_button.setFixedSize(15, 15)
 
-        # Remplacez par le chemin vers l'icône de croix
+        # Remplacez le chemin vers l'icône de croix
         self.close_button.setIcon(QIcon("Icon/fermer.png"))
         self.close_button.clicked.connect(self.on_close_button_clicked) 
         header_layout.addWidget(self.close_button)

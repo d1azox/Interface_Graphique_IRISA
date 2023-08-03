@@ -20,10 +20,10 @@ class MainWindow(QMainWindow):
 
         self.app_instance = app_instance #Instance de l'Application
 
-        self.resize(1280, 1024) #Taille du Main Window
+        self.resize(1280, 1024) #Taille du la fênetre principale
         self.setWindowTitle("Interface")
 
-        #Met en place l'interface
+        #Mise en place de l'interface
         self._createLayouts()
         self.setupUI()
 
@@ -50,12 +50,12 @@ class MainWindow(QMainWindow):
         self.splitter.addWidget(self.group_box1)
         self.splitter.addWidget(self.group_box2)
         self.splitter.setSizes(
-            [int(self.width() * 0.8), int(self.width() * 0.2)]) #Disposition par défault des conteneurs
+            [int(self.width() * 0.8), int(self.width() * 0.2)]) #Disposition par défaut des conteneurs
 
         # Ajouter le layout principal au layout de la fenêtre
         main_layout.addWidget(self.splitter)
 
-        # Définir le layout principal comme layout de la fenêtre
+        # Défini le layout principal comme layout de la fenêtre
         central_widget = QWidget(self)
         central_widget.setLayout(main_layout)
         self.setCentralWidget(central_widget)
@@ -81,10 +81,7 @@ class MainWindow(QMainWindow):
         self.graphicsView = self.view.graphics_view 
         self.scene = self.view.graphics_view.scene_
 
-        self.all_scenes.append(self.graphicsView)
-
-        #Menu de la scène principale(click droit)
-        
+        self.all_scenes.append(self.graphicsView) #Ajoute la première scène a la liste des scènes 
 
         #Création des scènes secondaires
         self.view2 = CustomGroupBox(self.app_instance, self)
@@ -109,7 +106,7 @@ class MainWindow(QMainWindow):
         #Arborescence
         self.tree_view = CustomTreeView(self)  # Création du QTreeView pour afficher l'arborescence
 
-        #Menu de l'arborescence(click droit)
+        #Menu de l'arborescence(clic droit)
         self.tree_view.setContextMenuPolicy(Qt.CustomContextMenu)
         self.tree_view.customContextMenuRequested.connect(self.showContextMenu)
 
@@ -136,13 +133,13 @@ class MainWindow(QMainWindow):
         self.splitter2.setSizes(
             [int(self.width() * 0.8), int(self.width() * 0.2)])
 
-        self.layout1.addWidget(self.splitter2) #Ajoute au layout
+        self.layout1.addWidget(self.splitter2) #Ajoute le spliter au layout
 
-    def showContextMenu(self, position): #Menue qui s'affiche quand on fait click droit sur l'arborescence
+    def showContextMenu(self, position): #Menue qui s'affiche quand on fait clic droit sur l'arborescence
         # Création d'un objet menu avec la QTreeView comme parent
         menu = QMenu(self.tree_view)
 
-        # Ajout des actions au menu en utilisant self.app_instance pour accéder à MyApp
+        # Ajout des actions au menu en utilisant self.app_instance pour accéder à l'instance de l'Application
         menu.addAction(self.app_instance.openTree_viewAction)
         menu.addAction(self.app_instance.saveAction)
         menu.addAction(self.app_instance.copyAction)
@@ -169,21 +166,21 @@ class MainWindow(QMainWindow):
     def apply_zoom_out_action_to_all_scenes(self):
         for scene in self.all_scenes:  # all_scenes est une liste contenant toutes les instances de la scène principale
             if scene.contains_menu == True or scene.contains == True:
-                scene.zoom_out()  # Appliquer l'action de zoom in sur chaque instance de la scène
+                scene.zoom_out()  # Appliquer l'action de zoom out sur chaque instance de la scène
                 return
         for scene in self.all_scenes: 
             scene.zoom_out()
 
     def apply_crop_action_to_all_scenes(self):
-        for scene in self.all_scenes:  # all_scenes est une liste contenant toutes les instances de la scène principale
-            scene.Crop()
+        for scene in self.all_scenes:  
+            scene.Crop() # Appliquer l'action de crop sur chaque instance de la scène
 
     def apply_crop_zoom_action_to_all_scenes(self):
         for scene in self.all_scenes: 
-            scene.CropZoom()
+            scene.CropZoom() # Appliquer l'action de crop plus zoom sur chaque instance de la scène
 
-    def clear_crop(self):
-        for scene in self.all_scenes:  # all_scenes est une liste contenant toutes les instances de la scène principale
+    def clear_crop(self): # Clear chaque instance de la scène
+        for scene in self.all_scenes:  
             scene.crop_item = None
             scene.crop = False
             scene.cropzoom = False

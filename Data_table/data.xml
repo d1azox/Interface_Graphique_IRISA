@@ -1,16 +1,16 @@
 <Data>
  <Row>
-  <Keep>Unchecked</Keep>
+  <Keep>Checked</Keep>
   <Property>model</Property>
   <Value>rednet4B</Value>
  </Row>
  <Row>
-  <Keep>Unchecked</Keep>
+  <Keep>Checked</Keep>
   <Property>threshold</Property>
   <Value>0.25</Value>
  </Row>
  <Row>
-  <Keep>Checked</Keep>
+  <Keep>Unchecked</Keep>
   <Property>nor</Property>
   <Value>None</Value>
  </Row>

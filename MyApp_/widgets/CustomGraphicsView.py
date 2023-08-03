@@ -202,7 +202,7 @@ class CustomGraphicsView(QGraphicsView):
             self.scene_.addItem(item)
 
     def showContextMenu_view(self, position):
-        # Création d'un objet menu avec la QTreeView comme parent
+        # Création d'un objet menu avec la QGraphicsView comme parent
         menu = QMenu(self)
 
         # Ajout des actions au menu en utilisant self.app_instance pour accéder à MyApp

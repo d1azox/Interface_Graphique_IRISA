@@ -3,7 +3,7 @@ from subprocess import Popen, PIPE
 import subprocess
 
 
-class Thread_Segmentation(QThread): #Thread pour le réseau Segnet / Rednet de la segmentation
+class Thread_Segmentation(QThread): #Thread pour le réseau Segnet / Rednet de la segmentation sémantique
     progressChanged = pyqtSignal(int)
     finished = pyqtSignal()
 
@@ -16,8 +16,8 @@ class Thread_Segmentation(QThread): #Thread pour le réseau Segnet / Rednet de l
 
     def run(self):
         try: 
-            with Popen(self.command, stdout=PIPE, bufsize=1, universal_newlines=True) as p: #Execute la commande 
-                for line in p.stdout: #Asynchrone pour récup les sortie de programme python pour update la barre de progression
+            with Popen(self.command, stdout=PIPE, bufsize=1, universal_newlines=True) as p: #Exécute la commande 
+                for line in p.stdout: #Méthode Asynchrone pour récupérer les sortie des programmes python afin d'update la barre de progression
                     if line.startswith("NB"): 
                         total_steps = int(line.split()[-1])
                     elif line.startswith("I"):

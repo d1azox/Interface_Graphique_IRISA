@@ -10,7 +10,7 @@ from widgets.Help import HelpDialog_detection,  HelpDialog_segmentation, HelpDia
 from threads.Thread_Segmentation import Thread_Segmentation
 from threads.Thread_Yolo import Thread_yolo_det, Thread_yolo_det_default, Thread_yolo_seg_default, Thread_yolo_seg
 
-class SecondaryWindow(QDialog):  # Fênetrede de la partie Run de l'interface
+class SecondaryWindow(QDialog):  # Fênetre de l'exécution des programmes
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setWindowTitle("Run Option")
@@ -19,7 +19,7 @@ class SecondaryWindow(QDialog):  # Fênetrede de la partie Run de l'interface
         main_layout = QVBoxLayout()  # Layout principal
         self.setLayout(main_layout)
 
-        group_box = QGroupBox()
+        group_box = QGroupBox() #Boxe principale de la fênetre
         group_box.setStyleSheet(
             "QGroupBox { border: 1px solid gray; border-radius: 9px; padding: 20px; }")
         main_layout.addWidget(group_box)
@@ -143,14 +143,14 @@ class SecondaryWindow(QDialog):  # Fênetrede de la partie Run de l'interface
         self.button_ok.clicked.connect(self.run_prog)
         group_layout.addWidget(self.button_ok, alignment=Qt.AlignRight)
 
-        # Image dans la scène est l'input par défault
+        # Image dans la scène est l'input par défaut
         self.label_open.setText(self.parent().graphicsView.current_scene_path)
 
-        self.combobox_detectIndexChanged(0) #Par défault index 0
+        self.combobox_detectIndexChanged(0) #Par défaut index 0 (detection d'objet)
 
         
 
-    # Les méthodes suivant permet de gérer l'états des checkbox et combobox :  que doit être afficher / désafficher sur l'interface
+    # Les méthodes suivant permet de gérer l'états des checkbox et combobox
 
     def combobox_detectIndexChanged(self, index):
         self.checkbox_advance.setChecked(False)
@@ -228,7 +228,7 @@ class SecondaryWindow(QDialog):  # Fênetrede de la partie Run de l'interface
             self.hideAdvanceInstanceSegmentationButtons()
             self.group_box2.setFixedHeight(140)
 
-    # Les méthodes suivantes (show / hide) permet d'afficher ou de désafficher l'interface détection / segmentation / option avancée
+    # Les méthodes suivantes (show / hide) permet d'afficher ou de désafficher l'interface détection  d'objet/ segmentation d'instance/ segmentation sémantique / option avancée
 
     def showDetectionButtons(self):
         self.button_open_model.setVisible(True)
@@ -325,7 +325,6 @@ class SecondaryWindow(QDialog):  # Fênetrede de la partie Run de l'interface
         self.spinbox_size_seg.setVisible(False)
         self.button_help_ins_seg.setVisible(False)
 
-    # Met à jour à l'interface de 'run option' si l'option avancé est cochée
     def deplace_segmentation(self, deplace):
         if deplace:
             self.options_layout.addWidget(self.label_weight, 1, 0)
@@ -336,8 +335,10 @@ class SecondaryWindow(QDialog):  # Fênetrede de la partie Run de l'interface
             self.options_layout.addWidget(self.combobox_weight, 2, 1)
             self.options_layout.addWidget(self.button_open_weight, 2, 2)
 
+    #Création des objets spécifique pour chaque type d'analyse d'image.
     def interface_segmentation(self):
 
+        #Programme
         self.combobox_program = QComboBox()
         self.label_program = QLabel("Program:")
         self.options_layout.addWidget(self.label_program, 1, 0)
@@ -353,6 +354,7 @@ class SecondaryWindow(QDialog):  # Fênetrede de la partie Run de l'interface
 
         self.button_open_file.setFixedSize(150, 25)
 
+        #Poids
         self.combobox_weight = QComboBox()
         self.label_weight = QLabel("Weights:")
         self.options_layout.addWidget(self.label_weight, 2, 0)
@@ -367,12 +369,14 @@ class SecondaryWindow(QDialog):  # Fênetrede de la partie Run de l'interface
 
         self.button_open_weight.setFixedSize(150, 25)
 
+        #Paramètre
         self.button_property = QPushButton("Program Parameters", self)
         self.button_property.clicked.connect(self.opentable_segmentation)
         self.options_layout.addWidget(self.button_property, 3, 1, alignment= Qt.AlignCenter )
 
         self.button_property.setFixedSize(150, 25)
 
+        #Aide
         self.button_help_segmentation = QPushButton("Help", self)
         self.button_help_segmentation.clicked.connect(self.openhelp_segmentation)
         self.options_layout.addWidget(self.button_help_segmentation, 3, 2)
@@ -381,6 +385,7 @@ class SecondaryWindow(QDialog):  # Fênetrede de la partie Run de l'interface
 
     def interface_detection(self):
 
+        #Modèle
         self.combobox_model = QComboBox()
         self.label_model = QLabel("Model:")
         self.options_layout.addWidget(self.label_model, 1, 0)
@@ -395,6 +400,8 @@ class SecondaryWindow(QDialog):  # Fênetrede de la partie Run de l'interface
         self.options_layout.addWidget(self.button_open_model, 1, 2)
 
         self.button_open_model.setFixedSize(150, 25)
+
+        #Seuil de confiance
 
         self.spinbox_conf = QDoubleSpinBox()
         self.label_conf = QLabel("confThreshold:")
@@ -412,14 +419,14 @@ class SecondaryWindow(QDialog):  # Fênetrede de la partie Run de l'interface
         self.options_layout.addWidget(self.spinbox_conf,2, 1)
 
        
-
+        #Aide
         self.button_help_detection = QPushButton("Help", self)
         self.button_help_detection.clicked.connect(self.openhelp_detection)
         self.options_layout.addWidget(self.button_help_detection, 2, 2)
 
         self.button_help_detection.setFixedSize(100, 25)
 
-        
+        #Taille de la découpe
         self.spinbox_size = QSpinBox()
         self.label_size = QLabel("Size:")
 
@@ -434,6 +441,7 @@ class SecondaryWindow(QDialog):  # Fênetrede de la partie Run de l'interface
         self.options_layout.addWidget(self.label_size, 3, 0)
         self.options_layout.addWidget(self.spinbox_size, 3, 1)
 
+        #Seuil du NMS
         self.spinbox_nms = QDoubleSpinBox()
         self.label_nms = QLabel("nmsThreshold:")
 
@@ -451,6 +459,7 @@ class SecondaryWindow(QDialog):  # Fênetrede de la partie Run de l'interface
 
     def interface_instance_segmentation(self):
 
+        #Modèle
         self.combobox_model_seg = QComboBox()
         self.label_model_seg = QLabel("Model:")
         self.options_layout.addWidget(self.label_model_seg, 1, 0)
@@ -465,6 +474,7 @@ class SecondaryWindow(QDialog):  # Fênetrede de la partie Run de l'interface
 
         self.button_open_model.setFixedSize(150, 25)
 
+        #Seuil de confiance
         self.spinbox_conf_seg = QDoubleSpinBox()
         self.label_conf_seg = QLabel("confThreshold:")
 
@@ -480,13 +490,14 @@ class SecondaryWindow(QDialog):  # Fênetrede de la partie Run de l'interface
         self.options_layout.addWidget(self.label_conf_seg, 2, 0)
         self.options_layout.addWidget(self.spinbox_conf_seg,2, 1)
 
+        #Aide
         self.button_help_ins_seg = QPushButton("Help", self)
         self.button_help_ins_seg.clicked.connect(self.openhelp_ins_segmentation)
         self.options_layout.addWidget(self.button_help_ins_seg, 2, 2)
 
         self.button_help_detection.setFixedSize(100, 25)
 
-
+        #Taille de la découpe
         self.spinbox_size_seg = QSpinBox()
         self.label_size_seg = QLabel("Size:")
 
@@ -503,7 +514,7 @@ class SecondaryWindow(QDialog):  # Fênetrede de la partie Run de l'interface
 
   
         
-
+    #Gestion des états des checbox "Save Image/Text" de la détection des objets.
     def checkbox_textStateChanged(self, state):
         if state != Qt.Checked and not self.checkbox_image.isChecked():
             self.checkbox_text.setCheckState(Qt.Checked)
@@ -525,27 +536,27 @@ class SecondaryWindow(QDialog):  # Fênetrede de la partie Run de l'interface
 
 
     def openhelp_segmentation(self):
-        # Initialisation de la fênetre Help pour les paramètres
+        # Initialisation de la fênetre Help pour les paramètres de la segmentation sémantique
         self.help_window = HelpDialog_segmentation(self)
         self.help_window.show()
 
     def openhelp_detection(self):
-        # Initialisation de la fênetre Help pour les paramètres
+        # Initialisation de la fênetre Help pour les paramètres de la détection d'objet
         self.help_window = HelpDialog_detection(self)
         self.help_window.show()
 
     def openhelp_ins_segmentation(self):
-        # Initialisation de la fênetre Help pour les paramètres
+        # Initialisation de la fênetre Help pour les paramètres de la segmentation d'instance
         self.help_window = HelpDialog_ins_segmentation(self)
         self.help_window.show()
 
-    # Charge le poids et le programme disponible sur le disque de l'utilisateur
+    # Charge les poids et le programme disponible sur le disque de l'utilisateur
     def loadCombobox(self):
         if self.combobox_detect.currentIndex() == 0:
             self.loadCombobox_detection()
-        if self.combobox_detect.currentIndex() == 1:
+        if self.combobox_detect.currentIndex() == 1: 
             
-            if self.combobox_option.currentIndex() ==2 and not self.checkbox_advance.isChecked():
+            if self.combobox_option.currentIndex() ==2 and not self.checkbox_advance.isChecked(): #Gére le cas de la segmentation sémanticquede Yolo
                 self.hideSegmentationButtons()
                 self.hideAdvanceSegmentation()
                 self.showInstanceSegmentationButtons()
@@ -569,7 +580,7 @@ class SecondaryWindow(QDialog):  # Fênetrede de la partie Run de l'interface
         if self.combobox_detect.currentIndex() == 2:
             self.loadCombobox_instance_segmentation()
 
-    def loadCombobox_segmentation(self):
+    def loadCombobox_segmentation(self): #Charge les combobox de la segmentation sémantique
         if self.combobox_option.count() != 0:
             weights_dir = "Weights_" + self.combobox_option.currentText()
             # Chemin du dossier contenant les poids dispo
@@ -594,7 +605,7 @@ class SecondaryWindow(QDialog):  # Fênetrede de la partie Run de l'interface
                     self.combobox_weight.addItem(file_path)
 
     # Charge les éléments par défault de la détection et les models disponible sur le disque
-    def loadCombobox_detection(self):
+    def loadCombobox_detection(self): #Charge les combobox de la détection d'objet
         if self.combobox_option.count() != 0:
             # Dossier des models sur le disque
             model_dir = "Model_" + self.combobox_option.currentText()
@@ -615,7 +626,7 @@ class SecondaryWindow(QDialog):  # Fênetrede de la partie Run de l'interface
                     # Ajoute le model dans le combobox
                     self.combobox_model.addItem(file_path)
 
-    def loadCombobox_instance_segmentation(self):
+    def loadCombobox_instance_segmentation(self): #Charge les combobox de la segmentation d'instance
         if self.combobox_option.count() != 0:
             # Dossier des models sur le disque
             model_dir = "Model_" + self.combobox_option.currentText()
@@ -635,26 +646,26 @@ class SecondaryWindow(QDialog):  # Fênetrede de la partie Run de l'interface
                     # Ajoute le model dans le combobox
                     self.combobox_model_seg.addItem(file_path)
 
-    # Ouvre la table des paramètres de la segmentation
+    # Ouvre la table des paramètres de la segmentation sémantique
     def opentable_segmentation(self):
         tertiary_window = TableWidget_Dialog(self)
         tertiary_window.exec_()
 
-    def openModelFile(self):  # Méthode pour l'ouverture du model (.pt) sur le disque
+    def openModelFile(self):  # Méthode pour l'ouverture du model (.pt) de la détection d'objet sur le disque
         file_path, _ = QFileDialog.getOpenFileName(
             self, "Open Model File", "", "Model File (*.pt)")
         if file_path:
             self.combobox_model.addItem(file_path)
             self.combobox_model.setCurrentText(file_path)
     
-    def openModel_Segmentation_File(self):  # Méthode pour l'ouverture du model (.pt) sur le disque
+    def openModel_Segmentation_File(self):  # Méthode pour l'ouverture du model (.pt) de la segmentation d'instance sur le disque
         file_path, _ = QFileDialog.getOpenFileName(
             self, "Open Model File", "", "Model File (*.pt)")
         if file_path:
             self.combobox_model_seg.addItem(file_path)
             self.combobox_model_seg.setCurrentText(file_path)
 
-    def openProgramFile(self):  # Méthode pour l'ouverture du programme (.py) sur le disque
+    def openProgramFile(self):  # Méthode pour l'ouverture du programme (.py) de la segmentation sémantique sur le disque
         file_path, _ = QFileDialog.getOpenFileName(
             self, "Open Program File", "", "Program File (*.py)")
         if file_path:
@@ -693,8 +704,8 @@ class SecondaryWindow(QDialog):  # Fênetrede de la partie Run de l'interface
             if folder_path:
                 self.label_save.setText(folder_path)
 
-    def run_prog(self):  # Fonction qui lance le programme choisit par l'utilisateur
-        if self.combobox_detect.currentIndex() == 0 : # Vérifie que les conditions sont respectées et lance le programme de la détection
+    def run_prog(self):  # Fonction qui lance le programme choisit par l'utilisateur après que l'utilisateur clic sur le bouton "OK"
+        if self.combobox_detect.currentIndex() == 0 : # Vérifie que les conditions sont respectées et lance le programme de la détection d'objet
             if not self.label_open.text():
                 QMessageBox.warning(self, "Error", "File picture empty.")
             elif not self.label_save.text():
@@ -706,18 +717,18 @@ class SecondaryWindow(QDialog):  # Fênetrede de la partie Run de l'interface
             else:
                 self.loadvar_detection()
 
-                if os.path.isdir(self.input):
+                if os.path.isdir(self.input): # Si le fichier input est un dossier
 
                     self.image_files = self.readdir(self.input)
                     self.output_path = self.output
 
-                    self.progress_window = ProgressDialog(
+                    self.progress_window = ProgressDialog( # Créer la fênetre de progression
                         len(self.image_files), self)
 
                     self.progress_window.show()
 
                     self.enum = 0
-
+                    # Parcours les images du dossier
                     for i, path_file in enumerate(self.image_files):
                         self.enum = i
                         self.input = path_file
@@ -727,7 +738,7 @@ class SecondaryWindow(QDialog):  # Fênetrede de la partie Run de l'interface
                         self.runYolo_detection()
                         self.progress_window.progress_updated.emit(i + 1)
 
-                else:
+                else: # Si le fichier input est une image
                     self.progress_window = ProgressDialog(1, self)
 
                     self.progress_window.show()
@@ -738,7 +749,7 @@ class SecondaryWindow(QDialog):  # Fênetrede de la partie Run de l'interface
                 self.parent().openPicture(self.output)
                 self.reject()
 
-        elif self.combobox_detect.currentIndex() == 1 and not self.combobox_option.currentIndex() == 2 :  # Vérifie que les conditions sont respectées et lance le programme de la segmentation
+        elif self.combobox_detect.currentIndex() == 1 and not self.combobox_option.currentIndex() == 2 :  # Vérifie que les conditions sont respectées et lance le programme de la segmentation sémantique
 
             if not self.label_open.text():
                 QMessageBox.warning(self, "Error", "File picture empty.")
@@ -779,8 +790,7 @@ class SecondaryWindow(QDialog):  # Fênetrede de la partie Run de l'interface
                         self.progress_window.progress_updated.emit(
                             i + 1)  # Met à jour le nombre d'image restant
 
-                else:  # Si le input est image
-                    # Initialisation de la fênetre de progression avec un seule intération
+                else:  # Si le fichier input est une image
                     self.progress_window = ProgressDialog(1, self)
 
                     self.progress_window.show()
@@ -808,7 +818,7 @@ class SecondaryWindow(QDialog):  # Fênetrede de la partie Run de l'interface
                 QMessageBox.warning(self, "Error", "Combobox model empty.")
             else:
                 self.loadvar_instance_segmentation()
-                self.semantic_seg = False
+                self.semantic_seg = False #Cas pour la segmentation sémantique de Yolo
                 if self.combobox_detect.currentIndex() == 1:
                     self.semantic_seg = True
 
@@ -829,14 +839,14 @@ class SecondaryWindow(QDialog):  # Fênetrede de la partie Run de l'interface
                         self.enum = i
                         self.input = path_file
                         name = os.path.splitext(os.path.basename(path_file))[
-                            0] + "_pred" + os.path.splitext(os.path.basename(path_file))[1]
+                            0] + "_seg_pred" + os.path.splitext(os.path.basename(path_file))[1]
 
                         self.output = os.path.join(self.output_path, name)
                         self.runYolo_segmentation()
                         
                         self.progress_window.progress_updated.emit(
                             i + 1)  # Met à jour le nombre d'image restant
-                else:
+                else: # Si le fichier input est une image
 
                     self.progress_window = ProgressDialog(1, self)
 
@@ -862,7 +872,7 @@ class SecondaryWindow(QDialog):  # Fênetrede de la partie Run de l'interface
 
         return image_files  # Liste contenant l'ensembles des chemins vers les images
 
-    # Extrait les variables de l'interface utilisateur
+    # Extrait les variables de la segmentation sémantique de l'interface utilisateur
     def loadvar_segmentation(self):
         self.input = self.label_open.text()
         self.output = self.label_save.text()
@@ -871,7 +881,7 @@ class SecondaryWindow(QDialog):  # Fênetrede de la partie Run de l'interface
         self.readtable()
         self.option = self.property_option
 
-    def loadvar_detection(self):  # Extrait les variables de l'interface utilisateur
+    def loadvar_detection(self):  # Extrait les variables de la détection d'objet de l'interface utilisateur
         self.input = self.label_open.text()
         self.output = self.label_save.text()
         self.model_d = self.combobox_model.currentText()
@@ -879,20 +889,20 @@ class SecondaryWindow(QDialog):  # Fênetrede de la partie Run de l'interface
         self.confThreshold = self.spinbox_conf.value()
         self.nmsThreshold = self.spinbox_nms.value()
 
-    def loadvar_instance_segmentation(self):
+    def loadvar_instance_segmentation(self): # Extrait les variables de la segmentation d'instance de l'interface utilisateur
         self.input = self.label_open.text()
         self.output = self.label_save.text()
         self.model_d = self.combobox_model_seg.currentText()
         self.size_ = self.spinbox_size_seg.value()
         self.confThreshold = self.spinbox_conf_seg.value()
 
-    def runYolo_detection(self):
+    def runYolo_detection(self): #Méthode pour l'exécution de la détection d'objet par Yolo
         self.parent().list_widget.clear()
 
         self.class_data = {}  # Initialisation du dico
-        image = cv2.imread(self.input)  # Read du l'image
+        image = cv2.imread(self.input)  # Lecture de l'image
 
-        if not self.checkbox_advance.isChecked():  # Programme par défault de Yolo
+        if not self.checkbox_advance.isChecked():  # Programme par défaut de Yolo
 
             self.thread3 = Thread_yolo_det_default(self.model_d, self.input, self.confThreshold)
             # Signal qui fait appel à la méthode handleResults
@@ -907,7 +917,7 @@ class SecondaryWindow(QDialog):  # Fênetrede de la partie Run de l'interface
             # Met à jour la barre de progression à la fin du thread
             self.progress_window.progress_bar.setValue(100)
 
-        else:
+        else: # Programme avec les options avancées de Yolo
 
             self.thread2 = Thread_yolo_det(
                 self.size_, self.model_d, self.input, self.confThreshold, self.nmsThreshold)
@@ -955,7 +965,7 @@ class SecondaryWindow(QDialog):  # Fênetrede de la partie Run de l'interface
         if self.checkbox_image.isChecked():
             cv2.imwrite(self.output, image)  # Créer l'image sur le disque
 
-    def plot_one_box(self, boxe , img, label=None):
+    def plot_one_box(self, boxe , img, label=None): #Méthode pour la créations des boxes et labels sur l'image
         # Plots one bounding box on image img
         font_scale = 0.6
         font_thickness = 1
@@ -975,9 +985,116 @@ class SecondaryWindow(QDialog):  # Fênetrede de la partie Run de l'interface
         cv2.rectangle(img, c1, c2, color, -1, cv2.LINE_AA)  # filled
         cv2.putText(img, label, (c1[0], c1[1] - 2), cv2.FONT_HERSHEY_SIMPLEX, font_scale, [225, 255, 255], font_thickness, lineType=cv2.LINE_AA)
     
-    # Récupére les dico qui est constitués d'informations sur les classes détéctées
+    # Récupére le dico qui est constitués d'informations sur les classes détéctées par Yolo
     def handleResults(self, class_data):
         self.class_data = class_data
+
+    def runSegmentation(self):
+        # Commande des options avancée de la segmentation
+        if self.checkbox_advance.isChecked():
+            if self.option != "":
+                command = [
+                    "python",
+                    self.program,
+                    "--input",
+                    self.input,
+                    "--output",
+                    self.output,
+                    "--weights",
+                    self.weight
+                ]
+                options = self.option.split()  # Divise la chaîne des options en une liste
+
+                command.extend(options)  # Ajoute les options à la commande
+
+            else:
+                command = [
+                    "python",
+                    self.program,
+                    "--input",
+                    self.input,
+                    "--output",
+                    self.output,
+                    "--weights",
+                    self.weight
+                ]
+        else:  # Commande des options par défaut de la segmentation
+            if self.combobox_option.currentText() == "Segnet":
+                command = [
+                    "python",
+                    "Program/Program_Segnet/applySegnetRGB.py",
+                    "--input",
+                    self.input,
+                    "--output",
+                    self.output,
+                    "--weights",
+                    self.weight,
+                    "--nor"
+
+                ]
+
+            elif self.combobox_option.currentText() == "Rednet":
+                command = [
+                    "python",
+                    "Program/Program_Rednet/applyRedNetRGB.py",
+                    "--input",
+                    self.input,
+                    "--output",
+                    self.output,
+                    "--weights",
+                    self.weight,
+                    "--model",
+                    "rednet4B",
+                    "--threshold",
+                    "0.25"
+                ]
+
+        print(command)
+
+        self.thread1 = Thread_Segmentation(command)
+        # Joint le signal a la barre de progression
+        self.thread1.progressChanged.connect(
+            self.progress_window.progressbar_updated)
+
+        loop = QEventLoop()
+        # Joint le signal finish à l'arrêt de la boucle
+        self.thread1.finished.connect(loop.quit)
+
+        self.thread1.start()
+        loop.exec_()
+
+    def create_trImage(self):
+        img = cv2.imread(self.output)
+
+        # ajoute le canal alpha
+        rgba = cv2.cvtColor(img, cv2.COLOR_RGB2RGBA)
+
+        # selectionne la partie de l'image non rouge
+        filtre = img[:, :, 2] < 128  # 2 le rouge BGR
+
+        rgba[filtre, 3] = 0  # Met en transparent la partie de l'image non rouge
+
+        cv2.imwrite(self.output, rgba)  # ecris l'image sur le disque
+
+    def superposition_picture(self):
+
+        # Chargement des images
+        image_normale = cv2.imread(self.input)
+        image_transparente = cv2.imread(self.output)
+
+        # Vérification de la transparence de l'image transparente
+        if image_transparente.shape[2] == 4:
+            # Extraction du canal alpha de l'image transparente
+            alpha_channel = image_transparente[:, :, 3]
+            alpha_channel = cv2.cvtColor(alpha_channel, cv2.COLOR_GRAY2BGR)
+
+            # Masquage de l'image normale avec le canal alpha
+            image_normale = cv2.bitwise_and(image_normale, alpha_channel)
+
+        # Superposition des deux images
+        result = cv2.add(image_transparente[:, :, :3], image_normale)
+
+        cv2.imwrite(self.output, result)  # ecris l'image sur le disque
 
     def readtable(self):
         # Définir le chemin d'accès au fichier XML
@@ -1034,114 +1151,7 @@ class SecondaryWindow(QDialog):  # Fênetrede de la partie Run de l'interface
         else:
             print("File path is not valid:", self.file_path)
 
-    def runSegmentation(self):
-        # Commande des options avancée de la segmentation
-        if self.checkbox_advance.isChecked():
-            if self.option != "":
-                command = [
-                    "python",
-                    self.program,
-                    "--input",
-                    self.input,
-                    "--output",
-                    self.output,
-                    "--weights",
-                    self.weight
-                ]
-                options = self.option.split()  # Divise la chaîne des options en une liste
-
-                command.extend(options)  # Ajoute les options à la commande
-
-            else:
-                command = [
-                    "python",
-                    self.program,
-                    "--input",
-                    self.input,
-                    "--output",
-                    self.output,
-                    "--weights",
-                    self.weight
-                ]
-        else:  # Commande des options par défault de la segmentation
-            if self.combobox_option.currentText() == "Segnet":
-                command = [
-                    "python",
-                    "Program/Program_Segnet/applySegnetRGB.py",
-                    "--input",
-                    self.input,
-                    "--output",
-                    self.output,
-                    "--weights",
-                    self.weight,
-                    "--nor"
-
-                ]
-
-            elif self.combobox_option.currentText() == "Rednet":
-                command = [
-                    "python",
-                    "Program/Program_Rednet/applyRedNetRGB.py",
-                    "--input",
-                    self.input,
-                    "--output",
-                    self.output,
-                    "--weights",
-                    self.weight,
-                    "--model",
-                    "rednet4B",
-                    "--threshold",
-                    "0.25"
-                ]
-
-        print(command)
-
-        self.thread1 = Thread_Segmentation(command)
-        # Connect le signal a la barre de progression
-        self.thread1.progressChanged.connect(
-            self.progress_window.progressbar_updated)
-
-        loop = QEventLoop()
-        # Connect le signal finish à l'arrêt de la boucle
-        self.thread1.finished.connect(loop.quit)
-
-        self.thread1.start()
-        loop.exec_()
-
-    def create_trImage(self):
-        img = cv2.imread(self.output)
-
-        # ajoute le canal alpha
-        rgba = cv2.cvtColor(img, cv2.COLOR_RGB2RGBA)
-
-        # selectionne la partie de l'image non rouge
-        filtre = img[:, :, 2] < 128  # 2 le rouge BGR
-
-        rgba[filtre, 3] = 0  # Met en transparent la partie de l'image non rouge
-
-        cv2.imwrite(self.output, rgba)  # ecris l'image sur le disque
-
-    def superposition_picture(self):
-
-        # Chargement des images
-        image_normale = cv2.imread(self.input)
-        image_transparente = cv2.imread(self.output)
-
-        # Vérification de la transparence de l'image transparente
-        if image_transparente.shape[2] == 4:
-            # Extraction du canal alpha de l'image transparente
-            alpha_channel = image_transparente[:, :, 3]
-            alpha_channel = cv2.cvtColor(alpha_channel, cv2.COLOR_GRAY2BGR)
-
-            # Masquage de l'image normale avec le canal alpha
-            image_normale = cv2.bitwise_and(image_normale, alpha_channel)
-
-        # Superposition des deux images
-        result = cv2.add(image_transparente[:, :, :3], image_normale)
-
-        cv2.imwrite(self.output, result)  # ecris l'image sur le disque
-
-    def runYolo_segmentation(self):
+    def runYolo_segmentation(self): #Méthode pour l'exécution de la segmentation de Yolo
 
         if not self.checkbox_advance.isChecked():  # Programme par défault de la segmentation de Yolo 
 

@@ -111,7 +111,7 @@ class TableWidget_Dialog(QDialog):
                                     value_element.text())
                                 self.table.setItem(row_count, 2, value_item)
 
-    def saveData(self):
+    def saveData(self): #Sauvagarde les paramètres de l'utilisateur dans un fichier XML
 
         if self.file_path:
             doc = QDomDocument()
