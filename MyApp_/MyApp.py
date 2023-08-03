@@ -222,9 +222,8 @@ class MyApp(QApplication):
             action_mapping[action]()
 
     def openHelpContent(self):
-        print("test")
         # Ouvrir le fichier PDF du manuel d'utilisation
-        webbrowser.open("Manuelle_utilisation.pdf")
+        webbrowser.open("Help/Manuelle_utilisation.pdf")
     def openGitHubWebPage(self):
         # Ouvrir la page web de la documentation
         webbrowser.open("https://github.com/d1azox/Interface_Graphique_IRISA")
