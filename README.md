@@ -1,6 +1,6 @@
 ## Interface Graphique
 
-![Interface Screenshot](Image/Capture_2.png)
+![Interface Screenshot](Image/Capture.png)
 
 ## Description
 
@@ -59,21 +59,21 @@ if sys.platform.startswith("linux") and ci_and_not_headless:
 
 1. Téléchargez le code source et installez les dépendances nécessaires.
 
-6. Lancez l'application en exécutant le fichier "main.py".
+2. Lancez l'application en exécutant le fichier "main.py".
 
 
-Documentation
+## Documentation
 
 Vous pouvez trouver la documentation complète de l'application dans les fichiers suivants :
 
 - [Manuel d'utilisation (PDF)](Help/Manuelle_utilisation.pdf)
 - [Documentation de Classe (PDF)](Help/Class_Documentation.pdf)
 
-Auteurs
+## Auteurs
 
     Arthur Courtrai 
 
-Licence
+## Licence
 
 Ce projet appartient au laboratoire IRISA
 
